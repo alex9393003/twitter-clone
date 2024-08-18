@@ -1,8 +1,17 @@
-const firebaseConfig = {
-  apiKey: "AIzaSyC5rkN0RF93_q1uYgoGQF7ex5TFryaussA",
-  authDomain: "lolt-bb9aa.firebaseapp.com",
-  projectId: "lolt-bb9aa",
-  storageBucket: "lolt-bb9aa.appspot.com",
-  messagingSenderId: "632100441282",
-  appId: "1:632100441282:web:4dc8d680f755e7d0baff5b"
-};
+const config = {
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
+} as const;
+
+type Config = typeof config;
+
+export function getFirebaseConfig(): Config {
+  if (Object.values(config).some((value) => !value))
+    throw new Error('Firebase config is not set or incomplete');
+
+  return config;
+}
